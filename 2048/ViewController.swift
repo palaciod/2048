@@ -7,12 +7,84 @@
 //
 
 import UIKit
-
+private var m = Model()
 class ViewController: UIViewController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        view.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        populate_board()
+        first_entry()
+        //let swipe_left = UISwipeGestureRecognizer(target: self, action: #selector(move_left))
+        //swipe_left.direction = .left
+        //self.view.addGestureRecognizer(swipe_left)
+        
+    }
+    
+    private func populate_row(y: Int) -> UIStackView{
+        let stack  = UIStackView(arrangedSubviews: createButtons(y_coordinate: y))
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.distribution = .fillEqually
+        stack.spacing = 10
+        stack.axis = .horizontal
+        //view.addSubview(stack)
+        //print(m.size())
+        //m.getButton(Point: [0,0]).setTitle("1", for : .normal)
+        return stack
+    }
+    private func populate_board(){
+        let boardStack = UIStackView(arrangedSubviews: [populate_row(y: 0),populate_row(y: 1),populate_row(y: 2),populate_row(y: 3)])
+        boardStack.translatesAutoresizingMaskIntoConstraints = false
+        boardStack.distribution = .fillEqually
+        boardStack.spacing = 10
+        boardStack.axis = .vertical
+        view.addSubview(boardStack)
+        boardStack.leftAnchor.constraint(equalToSystemSpacingAfter: view.leftAnchor, multiplier: 0).isActive = true
+        boardStack.rightAnchor.constraint(equalToSystemSpacingAfter: view.rightAnchor, multiplier: 0).isActive = true
+        boardStack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80).isActive = true
+        boardStack.heightAnchor.constraint(equalToConstant: view.frame.height/2).isActive = true
+        boardStack.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(move_left))
+        swipeLeft.direction = .left
+        boardStack.addGestureRecognizer(swipeLeft)
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(move_right))
+        swipeRight.direction = .right
+        boardStack.addGestureRecognizer(swipeRight)
+    }
+    
+    private func createButtons(y_coordinate: Int) -> [UIButton]{
+        var x:Int = 0
+        //var y:Int = 0 // Must be carried into populate_row function
+        var list:Array<UIButton> = []
+        while(x<4){
+            let local_button = UIButton()
+            local_button.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+            local_button.setTitle(String(x)+","+String(y_coordinate), for: .normal)
+            local_button.translatesAutoresizingMaskIntoConstraints = false
+            m.add(point: [x, y_coordinate], current_button: local_button)
+            list.append(local_button)
+            x += 1
+        }
+        return list
+    }
+    @objc private func move_left(){
+        var x = 0
+        while(x<100){
+            print(m.randomPoint())
+            x = x + 1
+        }
+    }
+    @objc private func move_right(){
+        print("right")
+    }
+    @objc private func move_down(){
+        print("You swiped down!")
+    }
+    @objc private func move_up(){
+        print("You swiped up!")
+    }
+    private func first_entry(){
+        m.getButton(Point: m.randomPoint()).setTitle(String(m.generate_even_entry()), for: .normal)
     }
 
 
