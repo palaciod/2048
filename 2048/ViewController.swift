@@ -59,7 +59,7 @@ class ViewController: UIViewController {
         while(x<4){
             let local_button = UIButton()
             local_button.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-            local_button.setTitle(String(x)+","+String(y_coordinate), for: .normal)
+            //local_button.setTitle(String(x)+","+String(y_coordinate), for: .normal)
             local_button.translatesAutoresizingMaskIntoConstraints = false
             m.add(point: [x, y_coordinate], current_button: local_button)
             list.append(local_button)
@@ -84,7 +84,13 @@ class ViewController: UIViewController {
         print("You swiped up!")
     }
     private func first_entry(){
-        m.getButton(Point: m.randomPoint()).setTitle(String(m.generate_even_entry()), for: .normal)
+        let first_random_point = m.randomPoint()
+        m.getButton(Point: first_random_point).setTitle(String(2), for: .normal)
+        var second_random_point = m.randomPoint()
+        while(first_random_point==second_random_point){
+            second_random_point = m.randomPoint()
+        }
+        m.getButton(Point: second_random_point).setTitle(String(m.generate_even_entry()), for: .normal)
     }
 
 
