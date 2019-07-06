@@ -18,6 +18,9 @@ class Model {
     public func size() -> Int {
         return board.count
     }
+    public func size_of_tracker() -> Int{
+        return x_tracker.count
+    }
     public func randomPoint() -> Array<Int> {
         let random_x = Int.random(in: 0..<4)
         let random_y = Int.random(in: 0..<4)
@@ -48,7 +51,7 @@ class Model {
     }
     // This function is for testing purposes.
     public func print_board_points(){
-        print("Sometjing")
+        print("Something")
     }
     public func is_button_empty(currentPoint: Array<Int>) -> Bool{
         if(getButton(Point: currentPoint).currentTitle!.isEmpty){
@@ -57,6 +60,8 @@ class Model {
         return false
     }
     public func move_right(){
-        
     }
+    
+    
+    
 }

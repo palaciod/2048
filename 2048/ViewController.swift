@@ -59,7 +59,7 @@ class ViewController: UIViewController {
         while(x<4){
             let local_button = UIButton()
             local_button.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-            //local_button.setTitle(String(x)+","+String(y_coordinate), for: .normal)
+            //local_button.setTitle(String(y_coordinate)+","+String(x), for: .normal)
             local_button.translatesAutoresizingMaskIntoConstraints = false
             m.add(point: [x, y_coordinate], current_button: local_button)
             list.append(local_button)
@@ -68,14 +68,10 @@ class ViewController: UIViewController {
         return list
     }
     @objc private func move_left(){
-        var x = 0
-        while(x<100){
-            print(m.randomPoint())
-            x = x + 1
-        }
+        print("You swiped left!")
     }
     @objc private func move_right(){
-        print("right")
+        m.move_right()
     }
     @objc private func move_down(){
         print("You swiped down!")
@@ -86,10 +82,12 @@ class ViewController: UIViewController {
     private func first_entry(){
         let first_random_point = m.randomPoint()
         m.getButton(Point: first_random_point).setTitle(String(2), for: .normal)
+        m.add_to_x_tracker(occupiedPoint: first_random_point)
         var second_random_point = m.randomPoint()
         while(first_random_point==second_random_point){
             second_random_point = m.randomPoint()
         }
+        m.add_to_x_tracker(occupiedPoint: second_random_point)
         m.getButton(Point: second_random_point).setTitle(String(m.generate_even_entry()), for: .normal)
     }
 
