@@ -60,24 +60,45 @@ class Model {
         return false
     }
     public func move_right(){
-        let smallPoint = Point(x_coordinate: 0, y_coordinate: 0)
-        let largePoint = Point(x_coordinate: 3, y_coordinate: 3)
-        print(smallPoint<largePoint)
+        var tracker_index = 0
+        x_tracker.sort(by: <)
+        x_tracker.reverse()
+        while tracker_index < x_tracker.count {
+            let key:Point = x_tracker[tracker_index]
+            let content = board[key]!.currentTitle
+            board[key]!.setTitle("", for: .normal)
+                print(tracker_index)
+            let x:Int = key.getX()
+                switch x {
+                case 0:
+                    key.setX(new_x: key.getX() + 3 )
+                    break;
+                case 1:
+                    key.setX(new_x: key.getX() + 2 )
+                    break;
+                case 2:
+                    key.setX(new_x: key.getX() + 1 )
+                    break;
+                case 3:
+                    key.setX(new_x: key.getX() )
+                    break;
+                default:
+                    break
+            }
+            board[key]!.setTitle(content, for: .normal)
+            tracker_index += 1
+        }
+    }
+    
+    private func add_button_content(content: String, index: Int){
         
     }
     public func print_tracker(){
         var x = 0
+        x_tracker.sort(by: >)
         while(x<x_tracker.count){
             print(x_tracker[x].toString())
             x+=1
         }
     }
-    
-    public func merge_sort_tracker(unsortedTracker: Array<Point>) -> Array<Point> {
-        
-        return []
-    }
-    
-    
-    
 }
