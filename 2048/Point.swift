@@ -15,11 +15,32 @@ class Point: Hashable{
         hasher.combine(y)
     }
     static func == (lhs: Point, rhs: Point) -> Bool {
-        if(lhs.compare(pointA: lhs,pointB: rhs)==0){
+        return lhs.getX() == rhs.getX() && lhs.getY() == rhs.getY()
+    }
+    static func < (lhs: Point, rhs: Point) -> Bool {
+        if(lhs.getX()<rhs.getX()){
             return true
+        }
+        if(lhs.getX() == rhs.getX()){
+            if(lhs.getY() < rhs.getY()){
+                return true
+            }
         }
         return false
     }
+    
+    static func > (lhs: Point, rhs: Point) -> Bool {
+        if(lhs.getX()>rhs.getX()){
+            return true
+        }
+        if(lhs.getX() == rhs.getX()){
+            if(lhs.getY()>rhs.getY()){
+                return true
+            }
+        }
+        return false
+    }
+    
     init(x_coordinate: Int, y_coordinate: Int) {
         x = x_coordinate
         y = y_coordinate
@@ -44,7 +65,7 @@ class Point: Hashable{
         return self
     }
     
-    private func compare(pointA: Point, pointB: Point) -> Int {
+    static func compare(pointA: Point, pointB: Point) -> Int {
         if(pointA.getX()<pointB.getX()){
             return -1
         }
@@ -63,6 +84,10 @@ class Point: Hashable{
             return 1
         }
         return 0
+    }
+    
+    public func toString() -> String {
+        return "{" + String(getX()) + "," + String(getY()) + "}"
     }
     
     

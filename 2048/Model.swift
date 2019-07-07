@@ -8,11 +8,11 @@
 
 import Foundation
 import UIKit
-private var board:Dictionary<Array<Int>,UIButton>!
-private var x_tracker:Array<Array<Int>>!
+private var board:Dictionary<Point,UIButton>!
+private var x_tracker:Array<Point>!
 class Model {
     init() {
-        board = [Array<Int>: UIButton]()
+        board = [Point: UIButton]()
         x_tracker = []
     }
     public func size() -> Int {
@@ -21,15 +21,15 @@ class Model {
     public func size_of_tracker() -> Int{
         return x_tracker.count
     }
-    public func randomPoint() -> Array<Int> {
+    public func randomPoint() -> Point {
         let random_x = Int.random(in: 0..<4)
         let random_y = Int.random(in: 0..<4)
-        return [random_x,random_y]
+        return Point(x_coordinate: random_x, y_coordinate: random_y)
     }
-    public func add(point: Array<Int>, current_button: UIButton){
+    public func add(point: Point, current_button: UIButton){
         board[point] = current_button
     }
-    public func add_to_x_tracker(occupiedPoint: Array<Int>){
+    public func add_to_x_tracker(occupiedPoint: Point){
         x_tracker.append(occupiedPoint)
     }
     
@@ -39,7 +39,7 @@ class Model {
     public func getY(Point: Array<Int>) -> Int{
         return Point.last!
     }
-    public func getButton(Point: Array<Int>) -> UIButton {
+    public func getButton(Point: Point) -> UIButton {
         return board[Point]!
     }
     public func generate_even_entry() -> Int {
@@ -53,13 +53,29 @@ class Model {
     public func print_board_points(){
         print("Something")
     }
-    public func is_button_empty(currentPoint: Array<Int>) -> Bool{
+    public func is_button_empty(currentPoint: Point) -> Bool{
         if(getButton(Point: currentPoint).currentTitle!.isEmpty){
             return true
         }
         return false
     }
     public func move_right(){
+        let smallPoint = Point(x_coordinate: 0, y_coordinate: 0)
+        let largePoint = Point(x_coordinate: 3, y_coordinate: 3)
+        print(smallPoint<largePoint)
+        
+    }
+    public func print_tracker(){
+        var x = 0
+        while(x<x_tracker.count){
+            print(x_tracker[x].toString())
+            x+=1
+        }
+    }
+    
+    public func merge_sort_tracker(unsortedTracker: Array<Point>) -> Array<Point> {
+        
+        return []
     }
     
     

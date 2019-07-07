@@ -61,17 +61,18 @@ class ViewController: UIViewController {
             local_button.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
             //local_button.setTitle(String(y_coordinate)+","+String(x), for: .normal)
             local_button.translatesAutoresizingMaskIntoConstraints = false
-            m.add(point: [x, y_coordinate], current_button: local_button)
+            let local_point = Point(x_coordinate: x,y_coordinate: y_coordinate)
+            m.add(point: local_point, current_button: local_button)
             list.append(local_button)
             x += 1
         }
         return list
     }
     @objc private func move_left(){
-        print("You swiped left!")
+        m.move_right()
     }
     @objc private func move_right(){
-        m.move_right()
+        m.print_tracker()
     }
     @objc private func move_down(){
         print("You swiped down!")
