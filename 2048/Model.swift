@@ -62,14 +62,11 @@ class Model {
     public func move_right(){
         var tracker_index = 0
         x_tracker.sort(by: <)
-        x_tracker.reverse()
         var reset: Int = 0
         while tracker_index < x_tracker.count {
-            let key:Point = x_tracker[tracker_index]
-            let content = board[key]!.currentTitle
+            let key = x_tracker[tracker_index]
+            let current_button_content: String? = board[key]?.currentTitle
             board[key]!.setTitle("", for: .normal)
-            print(tracker_index)
-            
             let x:Int = key.getX()
                 switch x {
                 case 0:
@@ -87,8 +84,24 @@ class Model {
                 default:
                     break
             }
-            board[key]!.setTitle(content, for: .normal)
-            tracker_index += 1
+            if(tracker_index != 0){
+                let prev_key = x_tracker[tracker_index - 1]
+                let prev_button: UIButton = board[prev_key]!
+                let prev_button_content: String = prev_button.currentTitle!
+                // Make sure that both points have the same x values, if not then it'll add points in different x positions
+                if current_button_content == prev_button_content && prev_key.getY() == key.getY(){
+                    let result:String = add_button_content(current_button_string: current_button_content!, buttonsTwo: prev_button)
+                    prev_button.setTitle(result, for: .normal)
+                }else{
+                    board[key]!.setTitle(current_button_content, for: .normal)
+                    tracker_index += 1
+                }
+                
+                
+            }else{
+                board[key]!.setTitle(current_button_content, for: .normal)
+                tracker_index += 1
+            }
         }
     }
     
@@ -98,7 +111,8 @@ class Model {
             reset_difference += 1
             return
         }
-        if x_tracker[index - 1].getY() - local_key.getY() != 0{
+        let previous_key: Point = x_tracker[index - 1]
+        if previous_key.getY() - local_key.getY() != 0{
             reset_difference = 0
             local_key.setX(new_x: local_key.getX() + toPosition - reset_difference)
             reset_difference += 1
@@ -109,8 +123,59 @@ class Model {
         
     }
     
-    private func add_button_content(content: String, index: Int){
+    public func move_left() {
+        var tracker_index = 0
+        x_tracker.sort(by: <)
+        var reset: Int = 0
+        while tracker_index < x_tracker.count {
+            let key = x_tracker[tracker_index]
+            let current_button_content: String = board[key]!.currentTitle!
+            board[key]!.setTitle("", for: .normal)
+            let x:Int = key.getX()
+            switch x {
+            case 0:
+                helper_move_right(toPosition: 0, index: tracker_index, local_key: key, &reset)
+                break;
+            case 1:
+                helper_move_right(toPosition: 1, index: tracker_index, local_key: key, &reset)
+                break;
+            case 2:
+                helper_move_right(toPosition: 2, index: tracker_index, local_key: key, &reset)
+                break;
+            case 3:
+                helper_move_right(toPosition: 3, index: tracker_index, local_key: key, &reset)
+                break;
+            default:
+                break
+            }
+            board[key]!.setTitle(current_button_content, for: .normal)
+            tracker_index += 1
+            
+        }
         
+    }
+    private func helper_move_left(toPosition: Int, index: Int, local_key: Point,_ reset_difference: inout Int){
+        if index == 0{
+            local_key.setX(new_x: local_key.getX() - toPosition - reset_difference)
+            reset_difference += 1
+            return
+        }
+        let previous_key: Point = x_tracker[index - 1]
+        if previous_key.getY() - local_key.getY() != 0 {
+            reset_difference = 0
+            local_key.setX(new_x: local_key.getX() - toPosition - reset_difference)
+            reset_difference += 1
+        }else{
+            local_key.setX(new_x: local_key.getX() - toPosition - reset_difference)
+            reset_difference += 1
+        }
+    }
+    
+    private func add_button_content(current_button_string: String, buttonsTwo: UIButton) -> String{
+        let firstInt = Int(current_button_string)
+        let secondInt = Int(buttonsTwo.currentTitle!)
+        let result:String = String(firstInt! + secondInt!)
+        return result
     }
     public func print_tracker(){
         var x = 0

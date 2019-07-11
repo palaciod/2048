@@ -50,6 +50,9 @@ class ViewController: UIViewController {
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(move_right))
         swipeRight.direction = .right
         boardStack.addGestureRecognizer(swipeRight)
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(move_down))
+        swipeDown.direction = .down
+        boardStack.addGestureRecognizer(swipeDown)
     }
     
     private func createButtons(y_coordinate: Int) -> [UIButton]{
@@ -69,13 +72,13 @@ class ViewController: UIViewController {
         return list
     }
     @objc private func move_left(){
-        m.move_right()
+        m.move_left()
     }
     @objc private func move_right(){
-        m.print_tracker()
+        m.move_right()
     }
     @objc private func move_down(){
-        print("You swiped down!")
+        m.print_tracker()
     }
     @objc private func move_up(){
         print("You swiped up!")
