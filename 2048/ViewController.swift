@@ -18,6 +18,12 @@ class ViewController: UIViewController {
         //let swipe_left = UISwipeGestureRecognizer(target: self, action: #selector(move_left))
         //swipe_left.direction = .left
         //self.view.addGestureRecognizer(swipe_left)
+        print("This is x_tracker: " )
+        m.print_tracker()
+        print("----------")
+        print("This is y_tracker: " )
+        m.print_y_tracker()
+        
     }
     
     private func populate_row(y: Int) -> UIStackView{
@@ -64,25 +70,36 @@ class ViewController: UIViewController {
         while(x<4){
             let local_button = UIButton()
             local_button.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-            //local_button.setTitle(String(y_coordinate)+","+String(x), for: .normal)
+            //local_button.setTitle("", for: .normal)
             local_button.translatesAutoresizingMaskIntoConstraints = false
             let local_point = Point(x_coordinate: x,y_coordinate: y_coordinate)
             m.add(point: local_point, current_button: local_button)
+            m.add_to_unoccupied_points(unoccupiedPoint: local_point)
             list.append(local_button)
             x += 1
         }
         return list
     }
     @objc private func move_left(){
+        print("This is x_tracker: " )
+        m.print_tracker()
+        print("----------")
+        print("This is y_tracker: " )
+        m.print_y_tracker()
         m.move_left()
         var new_random_point = m.randomPoint()
-        print(new_random_point.toString())
         while m.getButton(Point: new_random_point).currentTitle != nil {
             new_random_point = m.randomPoint()
         }
         m.add_to_x_tracker(occupiedPoint: new_random_point)
+        m.add_to_y_tracker(occupiedPoint: new_random_point.flipXY())
         m.getButton(Point: new_random_point).setTitle(String(m.generate_even_entry()), for: .normal)
         m.move_ended()
+        print("This is x_tracker: " )
+        m.print_tracker()
+        print("----------")
+        print("This is y_tracker: " )
+        m.print_y_tracker()
     }
     @objc private func move_right(){
         m.move_right()
@@ -92,41 +109,46 @@ class ViewController: UIViewController {
             new_random_point = m.randomPoint()
         }
         m.add_to_x_tracker(occupiedPoint: new_random_point)
+        m.add_to_y_tracker(occupiedPoint: new_random_point.flipXY())
         m.getButton(Point: new_random_point).setTitle(String(m.generate_even_entry()), for: .normal)
         m.move_ended()
+        
     }
     @objc private func move_down(){
         m.move_down()
         var new_random_point = m.randomPoint()
-        print(new_random_point.toString())
         while m.getButton(Point: new_random_point).currentTitle != nil {
             new_random_point = m.randomPoint()
         }
         m.add_to_x_tracker(occupiedPoint: new_random_point)
+        m.add_to_y_tracker(occupiedPoint: new_random_point.flipXY())
         m.getButton(Point: new_random_point).setTitle(String(m.generate_even_entry()), for: .normal)
         m.move_ended()
     }
     @objc private func move_up(){
         m.move_up()
         var new_random_point = m.randomPoint()
-        print(new_random_point.toString())
         while m.getButton(Point: new_random_point).currentTitle != nil {
             new_random_point = m.randomPoint()
         }
         m.add_to_x_tracker(occupiedPoint: new_random_point)
+        m.add_to_y_tracker(occupiedPoint: new_random_point.flipXY())
         m.getButton(Point: new_random_point).setTitle(String(m.generate_even_entry()), for: .normal)
         m.move_ended()
     }
     private func first_entry(){
-        let first_random_point = m.randomPoint()
+        let first_random_point = Point(x_coordinate: 1, y_coordinate: 1)
         m.getButton(Point: first_random_point).setTitle(String(2), for: .normal)
         m.add_to_x_tracker(occupiedPoint: first_random_point)
-        var second_random_point = m.randomPoint()  
+        var second_random_point = Point(x_coordinate: 2, y_coordinate: 1)
         while(first_random_point==second_random_point){
             second_random_point = m.randomPoint()
         }
         m.add_to_x_tracker(occupiedPoint: second_random_point)
+        m.add_to_y_tracker(occupiedPoint: second_random_point.flipXY())
+        m.add_to_y_tracker(occupiedPoint: first_random_point.flipXY())
         m.getButton(Point: second_random_point).setTitle(String(m.generate_even_entry()), for: .normal)
+        m.getButton(Point: second_random_point).setTitle(String(2), for: .normal)
     }
 
 

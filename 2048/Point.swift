@@ -65,25 +65,8 @@ class Point: Hashable{
         return self
     }
     
-    static func compare(pointA: Point, pointB: Point) -> Int {
-        if(pointA.getX()<pointB.getX()){
-            return -1
-        }
-        if(pointA.getX()==pointB.getX()){
-            if(pointA.getY()==pointB.getY()){
-                return 0
-            }
-            if(pointA.getY()<pointB.getY()){
-                return -1
-            }
-            if(pointA.getY()>pointB.getY()){
-                return 1
-            }
-        }
-        if(pointA.getX()>pointB.getX()){
-            return 1
-        }
-        return 0
+    public func flipXY() -> Point{
+        return Point(x_coordinate: y, y_coordinate: x)
     }
     
     public func toString() -> String {
